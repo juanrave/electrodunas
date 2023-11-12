@@ -68,9 +68,9 @@ classifiers = {
         #'Feature_Bagging_CBLOF':FeatureBagging(CBLOF(contamination=outliers_fraction,check_estimator=False, random_state=random_state),contamination=outliers_fraction,check_estimator=False,random_state=random_state),
         ##'Feature_Bagging_LOCI':FeatureBagging(LOCI(k=35, alpha=0.5,contamination=outliers_fraction),contamination=outliers_fraction,check_estimator=False,random_state=random_state),
         #'Histogram-base Outlier Detection (HBOS)': HBOS(contamination=outliers_fraction),
-        #'Isolation_Forest': IForest(contamination=outliers_fraction,random_state=random_state),
+        'Isolation_Forest': IForest(contamination=outliers_fraction,random_state=random_state),
         #'K Nearest Neighbors (KNN)': KNN(contamination=outliers_fraction),
-        'Average KNN': KNN(method='mean',contamination=outliers_fraction),
+        #'Average KNN': KNN(method='mean',contamination=outliers_fraction),
         #'LOF_10':LOF(n_neighbors=10, contamination=outliers_fraction),
         #'LOF_20':LOF(n_neighbors=20, contamination=outliers_fraction),
         #'LOF_30':LOF(n_neighbors=30, contamination=outliers_fraction),
@@ -98,5 +98,68 @@ for i, (clf_name, clf) in enumerate(classifiers.items()):
     dfx.insert(0, clf_name, y_pred)
     dfx.insert(0, clf_name+'score', scores_pred)
     print('OUTLIERS : ',n_outliers,'INLIERS : ',n_inliers, clf_name)
-  data=data.append(dfx,ignore_index=False)
+data=data.append(dfx,ignore_index=False)
+
+data.head()
+
+#data['LOF_40score'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99])
+#data['Isolation_Forestscore'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99])
+
+#data['Feature_Bagging_LOFscore'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99])
+
+#print(data['Angle-based Outlier Detector (ABOD)'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+#print(data['Angle-based Outlier Detector (ABOD)score'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+
+#print(data['Feature_Bagging_CBLOF'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+#print(data['Feature_Bagging_CBLOFscore'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+
+#print(data['Histogram-base Outlier Detection (HBOS)'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+#print(data['Histogram-base Outlier Detection (HBOS)score'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+
+#print(data['K Nearest Neighbors (KNN)'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+#print(data['K Nearest Neighbors (KNN)score'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+
+#print(data['LOF_10'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+#print(data['LOF_10score'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+
+#print(data['LOF_30'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+#print(data['LOF_30score'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+
+#print(data['LOF_50'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+#print(data['LOF_50score'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+
+#print(data['Minimum Covariance Determinant (MCD)'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+#print(data['Minimum Covariance Determinant (MCD)score'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+
+#print(data['Locally Selective Combination (LSCP)'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+#print(data['Locally Selective Combination (LSCP)score'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+
+#print(data['Subspace Outlier Detection (SOD)'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+#print(data['Subspace Outlier Detection (SOD)score'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+
+#print(data['Median KNN'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+#print(data['Median KNNscore'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99]))
+
+#metodo=data[['Cluster-based Local Outlier Factor (X)score','Cluster-based Local Outlier Factor (X)']]
+#metodo=data[['Feature_Bagging_IForestscore', 'Feature_Bagging_IForest']]
+#metodo=data[['Feature_Bagging_CBLOFscore', 'Feature_Bagging_CBLOF' ]]
+metodo=data[['Isolation_Forestscore', 'Isolation_Forest' ]]
+#metodo=data[['K Nearest Neighbors (KNN)score', 'K Nearest Neighbors (KNN)' ]]
+#metodo=data[['Average KNNscore', 'Average KNN' ]]
+#metodo=data[['Median KNNscore', 'Median KNN' ]]
+
+
+metodo.to_csv(r"Isolation_Forestscore.csv")
+
+#threshold = stats.scoreatpercentile(data['Feature_Bagging_LOFscore'],100 *outliers_fraction)
+data['OutlierScore']=data['Isolation_Forestscore']
+
+hist = data['OutlierScore'].hist()
+data['OutlierScore'].quantile([.1, .25, .5, .75, 0.90, 0.95, 0.97, 0.98, 0.99])
+
+data['Outlier_Flag']=np.where(data['OutlierScore']>0.1, 'Anomalia', 'No_Anomalia')
+
+is_outlier =  data['Outlier_Flag']=='Anomalia'
+Anomalos = data[is_outlier]
+Anomalos
 
