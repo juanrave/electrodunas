@@ -36,7 +36,7 @@ app.layout = dbc.Container([
           dcc.Dropdown(id='cliente-dropdown', options=['CLIENTE1', 'CLIENTE2', 'CLIENTE3', 'CLIENTE4', 'CLIENTE5', 'CLIENTE6', 'CLIENTE7', 'CLIENTE8', 'CLIENTE9', 'CLIENTE10'], value='CLIENTE1')
         ], width=2),
         dbc.Col([
-          dbc.Label("Acumular por:", className="fw-normal"),
+          dbc.Label("Acumular por período:", className="fw-normal"),
           dcc.Dropdown(id='medida-dropdown', options=['Mínimo', 'Máximo', 'Media', 'No acumular'], value='Media')
         ], width=2),
         dbc.Col([
@@ -99,7 +99,7 @@ def update_output(cliente, medida):
     return html.Div(
         [
             dash_table.DataTable(
-                data=data.to_dict("rows"),
+                data=data.to_dict("records"),
                 columns=[{"id": x, "name": x} for x in data.columns],
                 page_size= 10,
             )
