@@ -4,6 +4,7 @@
 import mlflow
 import mlflow.sklearn
 from pyod.models.knn import KNN
+from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
 import numpy as np
 import glob
@@ -21,8 +22,11 @@ all_files = glob.glob(os.path.join(".", "*.csv"))
 df_from_each_file = (pd.read_csv(f, sep=",") for f in all_files)
 df_elec = pd.concat(df_from_each_file, axis=0, ignore_index=True)
 
-data=pd.DataFrame()
-X = df_elec[['Active_energy', 'Reactive_energy', 'Voltaje_FA', 'Voltaje_FC']]
+df_elec['Month'] = df_elec['Fecha'].str.slice(5, 7).str.replace("-", "").astype(int)
+X = df_elec[['Month', 'Active_energy']]
+
+scaler = MinMaxScaler()
+X['Active_energy'] = scaler.fit_transform(X[['Active_energy']])
 
 with mlflow.start_run(experiment_id=experiment.experiment_id):
     # defina los parámetros del modelo
@@ -40,7 +44,7 @@ with mlflow.start_run(experiment_id=experiment.experiment_id):
     mlflow.log_param("contamination", outliers_fraction)
 
     # Registre el modelo
-    mlflow.sklearn.log_model(ift, "IForest")
+    mlflow.sklearn.log_model(ift, "KNN")
   
     # Cree y registre la métrica de interés
     mlflow.log_metric("n_outliers", n_outliers)
